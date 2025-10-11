@@ -6,8 +6,12 @@ WIDTH, HEIGHT = 1000, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Маршрутка в Нижнем Новгороде (или ад на иву)")
 clock = pygame.time.Clock()
+FPS = 60
 
 STATE_START = "start"
+STATE_PLAYING = "playing"
+STATE_GAMEOVER = "gameover"
+STATE_WIN = "win"
 
 state = STATE_START
 
@@ -17,9 +21,15 @@ def main_loop():
     running = True
 
     while running:
+        dt = clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                if state == STATE_START and event.key == pygame.K_SPACE:
+                    state = STATE_PLAYING
 
         screen.fill((135, 206, 235))
 
